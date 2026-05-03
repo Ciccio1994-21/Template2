@@ -203,6 +203,42 @@
                                         </div>
                                     </div>
                                 </section>
+
+                                {/* AUTO IN EVIDENZA */}
+                                <section className="bg-gray-50 py-24 border-t border-gray-100">
+                                    <div className="container mx-auto px-6">
+                                        <div className="text-center mb-16">
+                                            <h2 className="text-4xl font-black uppercase tracking-tighter mb-4 text-[#222d32]">Auto in Evidenza</h2>
+                                            <div className="flex justify-center items-center gap-4"><div className="h-px w-10 bg-gray-300"></div><Icon name="car" className="text-[#ebbf40]" size={20} /><div className="h-px w-10 bg-gray-300"></div></div>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                                            {[
+                                                { name: "Silver Audi", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
+                                                { name: "Black Jaguar", img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800" },
+                                                { name: "Blue BMW", img: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" }
+                                            ].map((car, idx) => (
+                                                <div key={idx} className="bg-white rounded-2xl shadow-xl overflow-hidden group hover:-translate-y-3 transition-all duration-500 border border-gray-100">
+                                                    <div className="h-56 overflow-hidden relative">
+                                                        <img src={car.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={car.name} />
+                                                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase text-[#222d32]">Disponibile</div>
+                                                    </div>
+                                                    <div className="p-8">
+                                                        <div className="flex items-center gap-3 mb-4">
+                                                            <div className="w-1.5 h-6 bg-[#ebbf40] rounded-full"></div>
+                                                            <h3 className="text-lg font-black uppercase text-[#222d32]">{car.name}</h3>
+                                                        </div>
+                                                        <p className="text-gray-400 text-sm mb-8 leading-relaxed">Prestazioni eccellenti unite a un comfort di classe superiore. Un'esperienza di guida senza compromessi.</p>
+                                                        <div className="grid grid-cols-3 bg-gray-50 rounded-xl overflow-hidden divide-x divide-gray-200">
+                                                            <div className="py-4 text-center"><p className="text-[11px] font-black uppercase">2017</p></div>
+                                                            <div className="py-4 text-center"><p className="text-[11px] font-black uppercase">Autom.</p></div>
+                                                            <div className="py-4 text-center"><p className="text-[11px] font-black uppercase">21k km</p></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
                             </>
                         )}
 
