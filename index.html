@@ -19,6 +19,8 @@
         .clip-path-header { clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%); }
         .clip-path-nav { clip-path: polygon(7% 0, 100% 0, 100% 100%, 0 100%); }
         .hero-gradient { background: linear-gradient(to bottom, rgba(26, 34, 38, 0.7) 0%, rgba(26, 34, 38, 0.2) 50%, rgba(26, 34, 38, 0.9) 100%); }
+        .animate-in { animation: fadeIn 0.7s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -38,7 +40,6 @@
             const [searchQuery, setSearchQuery] = useState("");
             const [brandFilter, setBrandFilter] = useState("Tutte");
             
-            // Nuove voci di menu aggiornate
             const menuItems = [
                 'Home', 
                 'Il nostro usato', 
@@ -47,7 +48,6 @@
                 'Contatti'
             ];
 
-            // Dati per la sezione "Il nostro usato"
             const inventoryCars = [
                 { id: 1, name: "Audi A6 Avant", brand: "Audi", description: "Station wagon elegante e spaziosa con pacchetto S-Line.", image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800", year: "2019", transmission: "Autom.", mileage: "45k km", price: "€ 38.500" },
                 { id: 2, name: "Jaguar F-Type", brand: "Jaguar", description: "Coupé sportiva dal sound inconfondibile, interni in pelle premium.", image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800", year: "2018", transmission: "Autom.", mileage: "32k km", price: "€ 45.000" },
@@ -62,6 +62,12 @@
                 const matchesBrand = brandFilter === "Tutte" || car.brand === brandFilter;
                 return matchesSearch && matchesBrand;
             });
+
+            const navigateTo = (page) => {
+                setCurrentPage(page);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setIsMobileMenuOpen(false);
+            };
 
             return (
                 <div className="min-h-screen bg-white flex flex-col">
@@ -87,7 +93,7 @@
                             <div className="flex h-[75px] items-center px-10">
                                 <div className="w-[30%] flex items-center text-white">
                                     <Icon name="car" size={32} className="mr-3 text-[#ebbf40]" />
-                                    <span className="text-2xl font-black uppercase tracking-tighter">Automobili</span>
+                                    <span className="text-2xl font-black uppercase tracking-tighter text-white">Automobili</span>
                                 </div>
                                 <div className="w-[70%] flex justify-end items-center gap-10">
                                     <div className="flex items-center gap-4 group cursor-pointer">
@@ -103,7 +109,7 @@
                             <div className="flex h-[45px] items-center justify-between px-10 text-white ml-[5%]">
                                 <nav className="flex gap-8 text-[12px] font-bold uppercase tracking-widest">
                                     {menuItems.map(item => (
-                                        <a key={item} href="#" onClick={(e) => { e.preventDefault(); setCurrentPage(item); }} className={`hover:text-[#ebbf40] transition-colors whitespace-nowrap ${currentPage === item ? 'text-[#ebbf40] border-b-2 border-[#ebbf40] py-1' : ''}`}>{item}</a>
+                                        <a key={item} href="#" onClick={(e) => { e.preventDefault(); navigateTo(item); }} className={`hover:text-[#ebbf40] transition-colors whitespace-nowrap ${currentPage === item ? 'text-[#ebbf40] border-b-2 border-[#ebbf40] py-1' : ''}`}>{item}</a>
                                     ))}
                                 </nav>
                                 <div className="flex items-center gap-6">
@@ -127,14 +133,14 @@
 
                     {isMobileMenuOpen && (
                         <div className="lg:hidden fixed inset-0 z-[90] bg-[#222d32] pt-24 px-8 text-white flex flex-col gap-6 overflow-y-auto">
-                            {menuItems.map(item => <a key={item} href="#" onClick={(e) => { e.preventDefault(); setCurrentPage(item); setIsMobileMenuOpen(false); }} className={`text-2xl font-bold uppercase tracking-widest border-b border-white/10 pb-3 ${currentPage === item ? 'text-[#ebbf40]' : ''}`}>{item}</a>)}
+                            {menuItems.map(item => <a key={item} href="#" onClick={(e) => { e.preventDefault(); navigateTo(item); }} className={`text-2xl font-bold uppercase tracking-widest border-b border-white/10 pb-3 ${currentPage === item ? 'text-[#ebbf40]' : ''}`}>{item}</a>)}
                         </div>
                     )}
 
                     <main className="flex-grow">
                         {currentPage === 'Home' && (
                             <>
-                                {/* SEZIONE HERO CLEAN */}
+                                {/* SEZIONE HERO */}
                                 <section className="relative h-[85vh] lg:h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-[#1a2226]">
                                     <div className="absolute inset-0">
                                         <img 
@@ -159,8 +165,11 @@
                                                 Il nostro standard di eccellenza garantisce solo i migliori veicoli selezionati per te. 
                                                 Potenza pura e design senza tempo.
                                             </p>
-                                            <button className="bg-[#ebbf40] text-[#222d32] px-12 py-4 rounded-full font-black uppercase tracking-widest text-[13px] hover:bg-white transition-all shadow-xl hover:scale-105 active:scale-95">
-                                                Scopri la collezione
+                                            <button 
+                                                onClick={() => navigateTo('Il nostro usato')}
+                                                className="bg-[#ebbf40] text-[#222d32] px-12 py-4 rounded-full font-black uppercase tracking-widest text-[13px] hover:bg-white transition-all shadow-xl hover:scale-105 active:scale-95"
+                                            >
+                                                Scopri il nostro piazzale
                                             </button>
                                         </div>
                                     </div>
@@ -174,59 +183,23 @@
                                                 <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-[#ebbf40] transition-all border border-gray-100">
                                                     <Icon name="users" size={32} className="text-[#222d32]" />
                                                 </div>
-                                                <h3 className="text-xl font-black uppercase mb-3">Staff Qualificato</h3>
+                                                <h3 className="text-xl font-black uppercase mb-3 text-[#222d32]">Staff Qualificato</h3>
                                                 <p className="text-gray-500 text-sm leading-relaxed">Esperti pronti a guidarti in ogni fase dell'acquisto con trasparenza e competenza.</p>
                                             </div>
                                             <div className="flex flex-col items-center group">
                                                 <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-[#ebbf40] transition-all border border-gray-100">
                                                     <Icon name="clock" size={32} className="text-[#222d32]" />
                                                 </div>
-                                                <h3 className="text-xl font-black uppercase mb-3">Servizio Rapido</h3>
+                                                <h3 className="text-xl font-black uppercase mb-3 text-[#222d32]">Servizio Rapido</h3>
                                                 <p className="text-gray-500 text-sm leading-relaxed">Ottimizziamo i tempi burocratici per farti salire a bordo della tua nuova auto il prima possibile.</p>
                                             </div>
                                             <div className="flex flex-col items-center group">
                                                 <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-[#ebbf40] transition-all border border-gray-100">
                                                     <Icon name="phone-call" size={32} className="text-[#222d32]" />
                                                 </div>
-                                                <h3 className="text-xl font-black uppercase mb-3">Supporto 24/7</h3>
+                                                <h3 className="text-xl font-black uppercase mb-3 text-[#222d32]">Supporto 24/7</h3>
                                                 <p className="text-gray-500 text-sm leading-relaxed">Siamo sempre a tua disposizione, anche dopo la vendita, per ogni tua necessità.</p>
                                             </div>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {/* AUTO IN EVIDENZA */}
-                                <section className="bg-gray-50 py-24 border-t border-gray-100">
-                                    <div className="container mx-auto px-6">
-                                        <div className="text-center mb-16">
-                                            <h2 className="text-4xl font-black uppercase tracking-tighter mb-4 text-[#222d32]">Auto in Evidenza</h2>
-                                            <div className="flex justify-center items-center gap-4"><div className="h-px w-10 bg-gray-300"></div><Icon name="car" className="text-[#ebbf40]" size={20} /><div className="h-px w-10 bg-gray-300"></div></div>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                                            {[
-                                                { name: "Silver Audi", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
-                                                { name: "Black Jaguar", img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800" },
-                                                { name: "Blue BMW", img: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" }
-                                            ].map((car, idx) => (
-                                                <div key={idx} className="bg-white rounded-2xl shadow-xl overflow-hidden group hover:-translate-y-3 transition-all duration-500 border border-gray-100">
-                                                    <div className="h-56 overflow-hidden relative">
-                                                        <img src={car.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={car.name} />
-                                                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase text-[#222d32]">Disponibile</div>
-                                                    </div>
-                                                    <div className="p-8">
-                                                        <div className="flex items-center gap-3 mb-4">
-                                                            <div className="w-1.5 h-6 bg-[#ebbf40] rounded-full"></div>
-                                                            <h3 className="text-lg font-black uppercase text-[#222d32]">{car.name}</h3>
-                                                        </div>
-                                                        <p className="text-gray-400 text-sm mb-8 leading-relaxed">Prestazioni eccellenti unite a un comfort di classe superiore. Un'esperienza di guida senza compromessi.</p>
-                                                        <div className="grid grid-cols-3 bg-gray-50 rounded-xl overflow-hidden divide-x divide-gray-200">
-                                                            <div className="py-4 text-center"><p className="text-[11px] font-black uppercase">2017</p></div>
-                                                            <div className="py-4 text-center"><p className="text-[11px] font-black uppercase">Autom.</p></div>
-                                                            <div className="py-4 text-center"><p className="text-[11px] font-black uppercase">21k km</p></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
                                         </div>
                                     </div>
                                 </section>
@@ -245,12 +218,11 @@
                                             <Icon name="car" className="text-[#ebbf40]" size={20} />
                                             <div className="h-[2px] w-12 bg-[#ebbf40]"></div>
                                         </div>
-                                        <p className="text-gray-400 font-medium">Scegli tra la nostra selezione di auto usate e garantite. Qualità e affidabilità al tuo servizio.</p>
+                                        <p className="text-gray-400 font-medium text-white/70">Scegli tra la nostra selezione di auto usate e garantite. Qualità e affidabilità al tuo servizio.</p>
                                     </div>
                                 </div>
 
                                 <div className="max-w-[1200px] mx-auto px-6 -mt-8 relative z-20">
-                                    {/* BARRA DEI FILTRI */}
                                     <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row gap-6 items-center border border-gray-100 mb-12">
                                         <div className="w-full md:w-1/2 relative">
                                             <Icon name="search" size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -281,124 +253,179 @@
                                         </div>
                                     </div>
 
-                                    {/* GRIGLIA VEICOLI */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {filteredInventory.length > 0 ? filteredInventory.map((car) => (
+                                        {filteredInventory.map((car) => (
                                             <div key={car.id} className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:-translate-y-2 transition-all duration-500 border border-gray-100 flex flex-col">
                                                 <div className="h-56 overflow-hidden relative">
                                                     <img src={car.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={car.name} />
-                                                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase text-[#222d32]">Pronta Consegna</div>
                                                 </div>
                                                 <div className="p-8 flex flex-col flex-grow">
                                                     <div className="flex items-center gap-3 mb-4">
                                                         <div className="w-1.5 h-6 bg-[#ebbf40] rounded-full"></div>
                                                         <h3 className="text-lg font-black uppercase text-[#222d32]">{car.name}</h3>
                                                     </div>
-                                                    <p className="text-gray-400 text-sm mb-6 flex-grow leading-relaxed">{car.description}</p>
+                                                    <p className="text-gray-400 text-sm mb-6 flex-grow">{car.description}</p>
                                                     <div className="text-2xl font-black text-[#222d32] mb-6 tracking-tighter">{car.price}</div>
-                                                    <div className="grid grid-cols-3 bg-gray-50 rounded-xl overflow-hidden divide-x divide-gray-200 mb-6">
-                                                        <div className="py-3 text-center"><p className="text-[10px] font-black uppercase">{car.year}</p></div>
-                                                        <div className="py-3 text-center"><p className="text-[10px] font-black uppercase">{car.transmission}</p></div>
-                                                        <div className="py-3 text-center"><p className="text-[10px] font-black uppercase">{car.mileage}</p></div>
-                                                    </div>
-                                                    <button className="w-full bg-[#222d32] text-white py-3 rounded-xl font-bold uppercase tracking-widest text-[11px] hover:bg-[#ebbf40] hover:text-[#222d32] transition-colors shadow-md">
-                                                        Richiedi Info
-                                                    </button>
+                                                    <button className="w-full bg-[#222d32] text-white py-3 rounded-xl font-bold uppercase tracking-widest text-[11px] hover:bg-[#ebbf40] hover:text-[#222d32] transition-colors">Richiedi Info</button>
                                                 </div>
                                             </div>
-                                        )) : (
-                                            <div className="col-span-full py-20 text-center text-gray-400">
-                                                <Icon name="search-x" size={48} className="mx-auto mb-4 opacity-30" />
-                                                <h3 className="text-xl font-black uppercase tracking-tighter text-[#222d32] mb-2">Nessun veicolo trovato</h3>
-                                                <p>Prova a modificare i parametri di ricerca o i filtri.</p>
-                                            </div>
-                                        )}
+                                        ))}
                                     </div>
                                 </div>
                             </section>
                         )}
 
-                        {currentPage !== 'Home' && currentPage !== 'Il nostro usato' && (
-                            <section className="bg-gray-50 py-32 text-center min-h-[60vh] flex flex-col justify-center items-center">
+                        {currentPage === 'Vendi la tua auto' && (
+                            <section className="bg-gray-50">
+                                <div className="py-24 px-6 max-w-5xl mx-auto animate-in">
+                                    <h2 className="text-5xl font-black uppercase italic mb-8 text-center text-[#222d32]">
+                                        Vendi la tua <span className="text-[#ebbf40]">Auto</span>
+                                    </h2>
+                                    <p className="text-center text-slate-500 font-bold mb-12 text-sm uppercase tracking-wider">
+                                        Ricevi una valutazione gratuita e senza impegno in pochi minuti.
+                                    </p>
+                                    <div className="bg-white p-4 md:p-8 rounded-[3rem] shadow-xl border border-slate-100 flex justify-center w-full h-[900px]">
+                                        <iframe 
+                                            src="https://docs.google.com/forms/d/e/1FAIpQLSeYtcqgrOejvWqClIlEUneC2LPtTNzf67413H_mxFtcnGdnbw/viewform?embedded=true" 
+                                            width="100%" 
+                                            height="100%" 
+                                            frameBorder="0" 
+                                            marginHeight="0" 
+                                            marginWidth="0"
+                                            className="rounded-2xl"
+                                        >
+                                            Caricamento in corso…
+                                        </iframe>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {currentPage === 'Chi Siamo' && (
+                            <section className="bg-white animate-in">
+                                {/* BANNER CHI SIAMO */}
+                                <div className="bg-[#1a2226] py-24 px-6 text-center relative overflow-hidden">
+                                    <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&q=80&w=2000")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                                    <div className="relative z-10 max-w-4xl mx-auto">
+                                        <h1 className="text-5xl lg:text-7xl font-black uppercase tracking-tighter text-white mb-6">La Nostra Passione</h1>
+                                        <div className="flex items-center justify-center gap-4 mb-8">
+                                            <div className="h-[2px] w-16 bg-[#ebbf40]"></div>
+                                            <Icon name="award" className="text-[#ebbf40]" size={24} />
+                                            <div className="h-[2px] w-16 bg-[#ebbf40]"></div>
+                                        </div>
+                                        <p className="text-white/80 text-lg font-medium italic">"Non vendiamo solo auto, consegniamo emozioni e affidabilità dal 1990."</p>
+                                    </div>
+                                </div>
+
+                                {/* STORIA E MISSIONE */}
+                                <div className="py-24 container mx-auto px-6 lg:px-20">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                                        <div className="relative">
+                                            <div className="absolute -top-6 -left-6 w-32 h-32 bg-[#ebbf40]/10 rounded-full -z-10"></div>
+                                            <img 
+                                                src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1000" 
+                                                className="rounded-[2.5rem] shadow-2xl border-8 border-white"
+                                                alt="Il nostro showroom"
+                                            />
+                                            <div className="absolute -bottom-6 -right-6 bg-[#ebbf40] text-[#222d32] p-8 rounded-3xl shadow-xl hidden md:block">
+                                                <div className="text-4xl font-black">30+</div>
+                                                <div className="text-[10px] font-bold uppercase tracking-widest">Anni di Esperienza</div>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col gap-6">
+                                            <span className="text-[#ebbf40] font-black uppercase tracking-[0.2em] text-xs">Chi Siamo</span>
+                                            <h2 className="text-4xl font-black uppercase text-[#222d32] tracking-tighter">Eccellenza Automobilistica a Portata di Mano</h2>
+                                            <p className="text-gray-500 leading-relaxed">
+                                                Siamo nati con un obiettivo chiaro: ridefinire l'esperienza di acquisto di un'auto usata. 
+                                                Ogni veicolo presente nel nostro piazzale è sottoposto a oltre 100 controlli tecnici rigorosi.
+                                            </p>
+                                            <p className="text-gray-500 leading-relaxed">
+                                                La nostra rivendita non è solo un punto vendita, ma un centro di consulenza dove il cliente 
+                                                è al centro di ogni decisione. Dalla scelta del modello al finanziamento personalizzato, 
+                                                ti accompagniamo con professionalità e passione.
+                                            </p>
+                                            <div className="grid grid-cols-2 gap-6 mt-4">
+                                                <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                                                    <Icon name="shield-check" className="text-[#ebbf40] mb-3" />
+                                                    <h4 className="font-bold text-[#222d32] uppercase text-sm mb-1">Qualità Garantita</h4>
+                                                    <p className="text-xs text-gray-400">12 mesi di garanzia su ogni acquisto.</p>
+                                                </div>
+                                                <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                                                    <Icon name="thumbs-up" className="text-[#ebbf40] mb-3" />
+                                                    <h4 className="font-bold text-[#222d32] uppercase text-sm mb-1">Clienti Soddisfatti</h4>
+                                                    <p className="text-xs text-gray-400">Oltre 5000 auto vendute con successo.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {currentPage === 'Contatti' && (
+                            <section className="bg-gray-50 py-32 text-center min-h-[60vh] flex flex-col justify-center items-center animate-in">
                                 <Icon name="wrench" size={64} className="text-[#ebbf40] mb-6" />
                                 <h1 className="text-4xl font-black uppercase text-[#222d32] mb-4">Sezione in costruzione</h1>
-                                <p className="text-gray-500 max-w-md mx-auto">La pagina "{currentPage}" sarà presto disponibile. Stiamo lavorando per offrirti nuovi contenuti.</p>
+                                <p className="text-gray-500 max-w-md mx-auto">La pagina "{currentPage}" sarà presto disponibile.</p>
                             </section>
                         )}
                     </main>
 
                     {/* FOOTER */}
-                    <footer className="bg-[#1a2226] text-white">
-                        <div className="container mx-auto px-6 lg:px-20 pt-20 pb-10">
+                    <footer className="bg-[#1a2226] text-white pt-20 pb-10">
+                        <div className="container mx-auto px-6 lg:px-20">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
                                 <div className="flex flex-col gap-6">
                                     <div className="flex items-center text-white">
                                         <Icon name="car" size={36} className="mr-3 text-[#ebbf40]" />
                                         <span className="text-3xl font-black uppercase tracking-tighter">Automobili</span>
                                     </div>
-                                    <p className="text-gray-400 text-sm leading-relaxed font-medium">
-                                        Dal 1990 selezioniamo solo il meglio del mercato automobilistico internazionale. La tua soddisfazione è il nostro motore.
-                                    </p>
-                                    {/* SOCIAL LOGOS */}
+                                    <p className="text-gray-400 text-sm leading-relaxed">Dal 1990 selezioniamo solo il meglio del mercato automobilistico.</p>
+                                    {/* ICONE SOCIAL RIPRISTINATE CON LOGHI UFFICIALI */}
                                     <div className="flex gap-4 mt-2">
-                                        <a href="#" className="group">
-                                            <div className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center hover:bg-[#ebbf40] transition-all bg-white/5 overflow-hidden p-2">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" className="w-full h-full object-contain group-hover:brightness-0" />
-                                            </div>
+                                        <a href="https://www.facebook.com/TuoProfilo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white transition-all overflow-hidden group">
+                                            <img 
+                                                src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" 
+                                                alt="Facebook" 
+                                                className="w-full h-full p-2 group-hover:scale-110 transition-transform" 
+                                            />
                                         </a>
-                                        <a href="#" className="group">
-                                            <div className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center hover:bg-[#ebbf40] transition-all bg-white/5 overflow-hidden p-2">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" className="w-full h-full object-contain group-hover:brightness-0 group-hover:grayscale" />
-                                            </div>
+                                        <a href="https://www.instagram.com/TuoProfilo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white transition-all overflow-hidden group">
+                                            <img 
+                                                src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" 
+                                                alt="Instagram" 
+                                                className="w-full h-full p-2 group-hover:scale-110 transition-transform" 
+                                            />
                                         </a>
                                     </div>
                                 </div>
-
                                 <div>
-                                    <h4 className="text-xl font-black uppercase mb-10 tracking-tighter flex items-center gap-3">
-                                        <div className="w-1.5 h-5 bg-[#ebbf40]"></div> Link Rapidi
-                                    </h4>
-                                    <ul className="flex flex-col gap-5 text-gray-400 text-[13px] font-bold uppercase tracking-widest">
-                                        {/* Link aggiornati nel footer */}
+                                    <h4 className="text-xl font-black uppercase mb-10 tracking-tighter">Link Rapidi</h4>
+                                    <ul className="flex flex-col gap-4 text-gray-400 text-sm uppercase font-bold">
                                         {menuItems.map(item => (
-                                            <li key={item}><a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage(item); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-[#ebbf40] transition-colors flex items-center gap-3"><Icon name="chevron-right" size={16} /> {item}</a></li>
+                                            <li key={item}><a href="#" onClick={(e) => { e.preventDefault(); navigateTo(item); }} className="hover:text-[#ebbf40] transition-colors">{item}</a></li>
                                         ))}
                                     </ul>
                                 </div>
-
                                 <div>
-                                    <h4 className="text-xl font-black uppercase mb-10 tracking-tighter flex items-center gap-3">
-                                        <div className="w-1.5 h-5 bg-[#ebbf40]"></div> Orari
-                                    </h4>
+                                    <h4 className="text-xl font-black uppercase mb-10 tracking-tighter">Orari</h4>
                                     <ul className="flex flex-col gap-4 text-gray-400 text-sm">
-                                        <li className="flex justify-between border-b border-white/5 pb-3"><span>Lunedì - Venerdì:</span> <span className="text-white font-bold">09:00 - 19:30</span></li>
-                                        <li className="flex justify-between border-b border-white/5 pb-3"><span>Sabato:</span> <span className="text-white font-bold">09:30 - 18:00</span></li>
+                                        <li className="flex justify-between"><span>Lun - Ven:</span> <span className="text-white font-bold">09:00 - 19:30</span></li>
+                                        <li className="flex justify-between"><span>Sabato:</span> <span className="text-white font-bold">09:30 - 18:00</span></li>
                                         <li className="flex justify-between text-gray-500"><span>Domenica:</span> <span>Chiuso</span></li>
                                     </ul>
                                 </div>
-
                                 <div>
-                                    <h4 className="text-xl font-black uppercase mb-10 tracking-tighter flex items-center gap-3">
-                                        <div className="w-1.5 h-5 bg-[#ebbf40]"></div> Newsletter
-                                    </h4>
-                                    <p className="text-gray-400 text-sm mb-6 leading-relaxed">Iscriviti per ricevere le ultime novità sui nuovi arrivi in concessionaria.</p>
-                                    <div className="relative">
-                                        <input 
-                                            type="email" 
-                                            placeholder="Email..." 
-                                            className="w-full bg-[#222d32] border border-white/10 rounded-xl py-4 pl-6 pr-14 text-sm focus:outline-none focus:border-[#ebbf40] transition-all"
-                                        />
-                                        <button className="absolute right-2 top-2 bottom-2 bg-[#ebbf40] text-[#222d32] rounded-lg px-3 flex items-center justify-center hover:bg-white transition-all">
-                                            <Icon name="send" size={18} />
-                                        </button>
+                                    <h4 className="text-xl font-black uppercase mb-10 tracking-tighter">Newsletter</h4>
+                                    <p className="text-gray-400 text-sm mb-6">Rimani aggiornato sui nuovi arrivi.</p>
+                                    <div className="flex">
+                                        <input type="email" placeholder="Email..." className="w-full bg-[#222d32] border border-white/10 rounded-l-xl py-3 px-4 text-sm focus:outline-none focus:border-[#ebbf40]" />
+                                        <button className="bg-[#ebbf40] text-[#222d32] rounded-r-xl px-4 flex items-center justify-center hover:bg-white transition-colors"><Icon name="send" size={18} /></button>
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="border-t border-white/5 pt-12 text-center">
-                                <p className="text-gray-500 text-[11px] uppercase font-bold tracking-[0.3em]">
-                                    © 2024 Automobili Premium Dealer. Eccellenza in Movimento.
-                                </p>
+                            <div className="border-t border-white/5 pt-10 text-center">
+                                <p className="text-gray-500 text-[10px] uppercase font-bold tracking-widest">© 2024 Automobili Premium Dealer.</p>
                             </div>
                         </div>
                     </footer>
