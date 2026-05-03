@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automobile Premium - Driving Pleasure</title>
+    <title>Automobili Premium - Piacere di Guidare</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM -->
@@ -36,23 +36,23 @@
         function App() {
             const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-            const menuItems = ['Home', 'Pages', 'Car Models', 'Shop', 'News', 'Contact Us'];
+            const menuItems = ['Home', 'Pagine', 'Modelli Auto', 'Shop', 'News', 'Contatti'];
 
             return (
                 <div className="min-h-screen bg-white">
-                    {/* TOP BAR */}
+                    {/* BARRA SUPERIORE */}
                     <div className="hidden lg:flex bg-[#1a2226] text-white py-2 px-10 justify-between items-center text-[11px] font-medium tracking-wide border-b border-white/5">
                         <div className="flex gap-4">
-                            <span className="bg-[#ebbf40] text-[#222d32] px-2 py-0.5 rounded font-bold">New</span>
-                            <span className="opacity-70 uppercase">Take the driver's seat and enjoy the ride</span>
+                            <span className="bg-[#ebbf40] text-[#222d32] px-2 py-0.5 rounded font-bold">Novità</span>
+                            <span className="opacity-70 uppercase">Mettiti al volante e goditi il viaggio con noi</span>
                         </div>
                         <div className="flex gap-6 opacity-70">
-                            <span>Call: +1 123 456 7890</span>
-                            <span className="border-l border-white/20 pl-6">Mail: contact@automobile.com</span>
+                            <span>Tel: +1 123 456 7890</span>
+                            <span className="border-l border-white/20 pl-6">Email: contatti@automobile.it</span>
                         </div>
                     </div>
 
-                    {/* MAIN HEADER DESKTOP */}
+                    {/* HEADER PRINCIPALE DESKTOP */}
                     <header className="hidden lg:block relative w-full h-[120px] bg-white z-50">
                         <div className="absolute inset-0 pointer-events-none">
                             <div className="absolute top-0 left-0 w-[45%] h-[75px] bg-[#222d32] clip-path-header"></div>
@@ -62,16 +62,16 @@
                             <div className="flex h-[75px] items-center px-10">
                                 <div className="w-[30%] flex items-center text-white">
                                     <Icon name="car" size={32} className="mr-3 text-[#ebbf40]" />
-                                    <span className="text-2xl font-black uppercase tracking-tighter">Automobile</span>
+                                    <span className="text-2xl font-black uppercase tracking-tighter">Automobili</span>
                                 </div>
                                 <div className="w-[70%] flex justify-end items-center gap-10">
                                     <div className="flex items-center gap-4 group cursor-pointer">
                                         <div className="bg-gray-100 p-2 rounded-full group-hover:bg-[#ebbf40] transition-colors"><Icon name="phone" size={16} /></div>
-                                        <div className="flex flex-col text-[12px]"><span className="text-gray-400 font-bold uppercase text-[9px]">Phone</span><span className="font-bold">+1 123 456 7890</span></div>
+                                        <div className="flex flex-col text-[12px]"><span className="text-gray-400 font-bold uppercase text-[9px]">Telefono</span><span className="font-bold">+1 123 456 7890</span></div>
                                     </div>
                                     <div className="flex items-center gap-4 group cursor-pointer">
                                         <div className="bg-gray-100 p-2 rounded-full group-hover:bg-[#ebbf40] transition-colors"><Icon name="mail" size={16} /></div>
-                                        <div className="flex flex-col text-[12px]"><span className="text-gray-400 font-bold uppercase text-[9px]">Email</span><span className="font-bold">contact@automobile.com</span></div>
+                                        <div className="flex flex-col text-[12px]"><span className="text-gray-400 font-bold uppercase text-[9px]">Email</span><span className="font-bold">info@automobile.it</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -89,11 +89,11 @@
                         </div>
                     </header>
 
-                    {/* MOBILE HEADER */}
+                    {/* HEADER MOBILE */}
                     <div className="lg:hidden flex justify-between items-center p-4 bg-[#222d32] text-white sticky top-0 z-[100]">
                         <div className="flex items-center">
                             <Icon name="car" size={24} className="mr-2 text-[#ebbf40]" />
-                            <span className="font-black uppercase tracking-tighter">Automobile</span>
+                            <span className="font-black uppercase tracking-tighter">Automobili</span>
                         </div>
                         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}><Icon name={isMobileMenuOpen ? "x" : "menu"} /></button>
                     </div>
@@ -104,20 +104,20 @@
                         </div>
                     )}
 
-                    {/* HERO SECTION */}
+                    {/* SEZIONE HERO */}
                     <section className="relative bg-[#1a2226] overflow-hidden min-h-[600px] flex items-center pt-10 lg:pt-0">
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
                             <div className="absolute top-0 right-0 w-[60%] h-full bg-gradient-to-l from-blue-900 to-transparent"></div>
                         </div>
                         <div className="container mx-auto px-6 lg:px-20 relative z-10 flex flex-col lg:flex-row items-center gap-12">
                             <div className="lg:w-1/2 text-center lg:text-left">
-                                <h1 className="text-white text-5xl lg:text-7xl font-black uppercase mb-6 tracking-tighter leading-none">Designed For Driving Pleasure</h1>
-                                <p className="text-gray-400 text-sm max-w-lg mb-10 leading-relaxed">Il connubio perfetto tra ingegneria tedesca e design d'avanguardia. Ogni curva è pensata per regalarti un'emozione indimenticabile al volante.</p>
+                                <h1 className="text-white text-5xl lg:text-7xl font-black uppercase mb-6 tracking-tighter leading-none">Progettata per il piacere di guidare</h1>
+                                <p className="text-gray-400 text-sm max-w-lg mb-10 leading-relaxed">Il connubio perfetto tra ingegneria d'eccellenza e design d'avanguardia. Ogni curva è pensata per regalarti un'emozione indimenticabile al volante.</p>
                                 
                                 <div className="glass-effect rounded-2xl p-6 lg:p-8 flex flex-col lg:flex-row gap-8 lg:gap-12 border border-white/10 inline-block text-white">
                                     <div className="flex flex-col">
                                         <span className="text-2xl font-bold">520 nm</span>
-                                        <span className="text-[10px] uppercase font-bold text-gray-400">Torque</span>
+                                        <span className="text-[10px] uppercase font-bold text-gray-400">Coppia</span>
                                     </div>
                                     <div className="flex flex-col border-l border-white/20 pl-8">
                                         <span className="text-2xl font-bold">4.4s</span>
@@ -125,44 +125,44 @@
                                     </div>
                                     <div className="flex flex-col border-l border-white/20 pl-8">
                                         <span className="text-2xl font-bold">290km/h</span>
-                                        <span className="text-[10px] uppercase font-bold text-gray-400">Max Speed</span>
+                                        <span className="text-[10px] uppercase font-bold text-gray-400">Velocità Max</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="lg:w-1/2 relative">
-                                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=1200" alt="Red Audi" className="w-full h-auto drop-shadow-[0_35px_35px_rgba(0,0,0,0.5)] transform -scale-x-100" />
+                                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=1200" alt="Audi Rossa" className="w-full h-auto drop-shadow-[0_35px_35px_rgba(0,0,0,0.5)] transform -scale-x-100" />
                             </div>
                         </div>
                     </section>
 
-                    {/* PERFORMANCE SECTION */}
+                    {/* SEZIONE PERFORMANCE */}
                     <section className="flex flex-col lg:flex-row py-20 px-6 lg:px-20 items-center gap-20">
                         <div className="lg:w-1/2 relative group">
                             <div className="absolute inset-0 bg-[#222d32] clip-path-hero-slant -z-10 translate-x-4 translate-y-4 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></div>
-                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800" alt="Black Sedan" className="w-full rounded-sm clip-path-hero-slant shadow-2xl" />
+                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800" alt="Berlina Nera" className="w-full rounded-sm clip-path-hero-slant shadow-2xl" />
                         </div>
                         <div className="lg:w-1/2">
                             <span className="text-[10px] font-bold text-blue-600 uppercase tracking-[0.3em] mb-4 block">Performance</span>
-                            <h2 className="text-4xl font-black uppercase mb-6 tracking-tighter text-[#222d32]">More Powerful, Lighter, Faster</h2>
-                            <p className="text-gray-500 mb-8 leading-relaxed italic">"La potenza non è nulla senza il controllo. Abbiamo ridotto il peso del 15% migliorando la stabilità in curva."</p>
-                            <button className="bg-blue-600 text-white px-10 py-3 rounded-full font-bold uppercase tracking-widest text-[12px] hover:bg-black transition-colors shadow-lg">Read More</button>
+                            <h2 className="text-4xl font-black uppercase mb-6 tracking-tighter text-[#222d32]">Più Potente, Leggera, Veloce</h2>
+                            <p className="text-gray-500 mb-8 leading-relaxed italic">"La potenza non è nulla senza il controllo. Abbiamo ridotto il peso del 15% migliorando drasticamente la stabilità in ogni curva."</p>
+                            <button className="bg-blue-600 text-white px-10 py-3 rounded-full font-bold uppercase tracking-widest text-[12px] hover:bg-black transition-colors shadow-lg">Scopri di più</button>
                         </div>
                     </section>
 
-                    {/* FEATURED CARS */}
+                    {/* AUTO IN EVIDENZA */}
                     <section className="bg-gray-50 py-24">
                         <div className="container mx-auto px-6">
                             <div className="text-center mb-16">
-                                <h2 className="text-3xl font-black uppercase tracking-tighter mb-4">Featured Cars</h2>
+                                <h2 className="text-3xl font-black uppercase tracking-tighter mb-4">Auto in Evidenza</h2>
                                 <div className="flex justify-center items-center gap-4"><div className="h-px w-10 bg-gray-300"></div><Icon name="car" className="text-[#ebbf40]" size={16} /><div className="h-px w-10 bg-gray-300"></div></div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                 {[
-                                    { name: "Silver Audi", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
-                                    { name: "Black Jaguar", img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800" },
-                                    { name: "Blue BMW", img: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" }
+                                    { name: "Audi Silver", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
+                                    { name: "Jaguar Black", img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800" },
+                                    { name: "BMW Blue", img: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" }
                                 ].map((car, idx) => (
-                                    <div key={idx} className="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition-all">
+                                    <div key={idx} className="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition-all border border-gray-100">
                                         <div className="h-52 overflow-hidden">
                                             <img src={car.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={car.name} />
                                         </div>
@@ -174,8 +174,8 @@
                                             <p className="text-gray-400 text-xs mb-8 italic leading-relaxed">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</p>
                                             <div className="grid grid-cols-3 border-t border-gray-100">
                                                 <div className="py-4 text-center border-r border-gray-100"><p className="text-[10px] font-bold">2017</p></div>
-                                                <div className="py-4 text-center border-r border-gray-100"><p className="text-[10px] font-bold">Automatic</p></div>
-                                                <div className="py-4 text-center"><p className="text-[10px] font-bold">21,000 ml</p></div>
+                                                <div className="py-4 text-center border-r border-gray-100"><p className="text-[10px] font-bold">Automatico</p></div>
+                                                <div className="py-4 text-center"><p className="text-[10px] font-bold">21.000 km</p></div>
                                             </div>
                                         </div>
                                     </div>
