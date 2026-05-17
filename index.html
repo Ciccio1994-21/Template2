@@ -142,6 +142,7 @@
             const [loading, setLoading] = useState(true);
             const [activeImage, setActiveImage] = useState(null);
             const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+            const [logoError, setLogoError] = useState(false); // Nuovo stato per gestire l'errore del logo
 
             // Aggiorna il titolo del documento dinamicamente
             useEffect(() => {
@@ -205,11 +206,20 @@
                     <nav className="bg-white/95 backdrop-blur-md border-b sticky top-0 z-50 px-6 py-4 shadow-sm w-full">
                         <div className="max-w-7xl mx-auto flex justify-between items-center">
                             <div className="flex items-center gap-2 cursor-pointer" onClick={() => { setCurrentPage('home'); setSelectedCar(null); setIsMobileMenuOpen(false); }}>
-                                {/* LOGO: Ricreato tipograficamente in stile con l'originale */}
-                                <div className="flex items-center">
-                                    <span className="font-black text-4xl tracking-tighter text-slate-900">ox</span>
-                                    <span className="font-medium text-4xl italic tracking-tight text-slate-900" style={{ fontFamily: 'Georgia, serif' }}>dealer.</span>
-                                </div>
+                                {/* LOGO ORIGINALE CARICATO con Fallback al testo se non trovato */}
+                                {!logoError ? (
+                                    <img 
+                                        src="logo.jpg" 
+                                        alt="Ox Dealer Logo" 
+                                        className="h-12 md:h-16 object-contain" 
+                                        onError={() => setLogoError(true)} 
+                                    />
+                                ) : (
+                                    <div className="flex items-center">
+                                        <span className="font-black text-4xl tracking-tighter text-slate-900">ox</span>
+                                        <span className="font-medium text-4xl italic tracking-tight text-yellow-500" style={{ fontFamily: 'Georgia, serif' }}>dealer.</span>
+                                    </div>
+                                )}
                             </div>
                             
                             <div className="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-slate-500">
@@ -548,7 +558,21 @@
                     <footer className="bg-slate-950 text-white py-16 px-6 mt-auto">
                         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 border-b border-white/10 pb-12 mb-8">
                             <div>
-                                <h4 className="font-black uppercase italic text-2xl mb-4">{CONFIG.nomeConcessionaria} <span className="text-red-600">{CONFIG.citta}</span></h4>
+                                {!logoError ? (
+                                    <div className="bg-white inline-block px-4 py-2 rounded-2xl mb-4">
+                                        <img 
+                                            src="logo.jpg" 
+                                            alt="Ox Dealer Logo" 
+                                            className="h-10 object-contain" 
+                                            onError={() => setLogoError(true)} 
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="bg-white inline-block px-4 py-2 rounded-2xl mb-4 flex items-center w-max">
+                                        <span className="font-black text-2xl tracking-tighter text-slate-900">ox</span>
+                                        <span className="font-medium text-2xl italic tracking-tight text-yellow-500" style={{ fontFamily: 'Georgia, serif' }}>dealer.</span>
+                                    </div>
+                                )}
                                 <p className="text-slate-400 text-sm leading-relaxed mb-6 italic">{CONFIG.descrizioneFooter}</p>
                                 <div className="flex gap-4">
                                     {CONFIG.social.instagram && (
