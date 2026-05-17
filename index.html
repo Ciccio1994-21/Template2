@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Concessionaria</title>
+    <title>Ox Dealer Auto</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -92,7 +92,7 @@
             telefonoMostrato: "+39 333 123 4567",
             telefonoLink: "+393331234567", // Senza spazi per il link tel:
             whatsappNumber: "393331234567", // Per il link wa.me
-            email: "info@oxdealer.it",
+            email: "dealerservice.ox@gmail.com",
             
             // Social e Link Esterni
             social: {
@@ -112,27 +112,19 @@
                 inizialeFondatore: "O"
             },
 
-            // Database Firebase (Lasciato quello originale per mantenere la demo funzionante, cambialo per nuovi clienti)
+            // Database Firebase
             firebase: {
                 apiKey: "AIzaSyCB5yV6u4DtzUFb0jADUJobh8In52JNzp4",
                 authDomain: "maxcar-7416d.firebaseapp.com",
                 projectId: "maxcar-7416d",
                 storageBucket: "maxcar-7416d.firebasestorage.app",
                 messagingSenderId: "279232212865",
-                appId: "1:279232212865:web:9368d42766b9a011bb4280",
-                measurementId: "G-223C65R2FQ"
+                appId: "1:279232212865:web:b3efed853a2f3057bb4280",
+                measurementId: "G-5NW557LHKR"
             },
             // L'ID del database per scaricare le auto
             dbAppId: "ox-dealer-demo" 
         };
-
-        // Mock data per visualizzare le categorie richieste nella demo senza doverle caricare a mano
-        const MOCK_VEHICLES = [
-            { id: 'm1', marca: 'Mercedes-Benz', modello: 'Classe A 200 d', prezzo: 24500, anno: 2021, km: 45000, alimentazione: 'Diesel', categoria: 'Auto', immagine: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=800' },
-            { id: 'm2', marca: 'Fiat', modello: 'Ducato Maxi', prezzo: 18900, anno: 2019, km: 120000, alimentazione: 'Diesel', categoria: 'Furgoni', immagine: 'https://images.unsplash.com/photo-1605816988069-42b7a4214fbc?auto=format&fit=crop&q=80&w=800' },
-            { id: 'm3', marca: 'Caterpillar', modello: 'Escavatore 320', prezzo: 45000, anno: 2018, km: 3500, alimentazione: 'Diesel', categoria: 'Mezzi Agricoli', immagine: 'https://images.unsplash.com/photo-1574868019672-97b794db54cb?auto=format&fit=crop&q=80&w=800' }
-        ];
-        // ==========================================
 
         if (!firebase.apps.length) firebase.initializeApp(CONFIG.firebase);
         const db = firebase.firestore();
@@ -164,15 +156,15 @@
                             .orderBy('createdAt', 'desc')
                             .onSnapshot(snapshot => {
                                 const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                                // Uniamo i dati db con i mock per assicurare che furgoni e mezzi agricoli si vedano
-                                setAutoList([...data, ...MOCK_VEHICLES]);
+                                // Imposta solo i dati reali provenienti dal database
+                                setAutoList(data);
                                 setLoading(false);
                                 const loader = document.getElementById('loader');
                                 if (loader) loader.style.opacity = '0';
                                 setTimeout(() => { if (loader) loader.style.display = 'none'; }, 500);
                             }, (err) => {
                                 console.error("Errore database:", err);
-                                setAutoList(MOCK_VEHICLES);
+                                setAutoList([]);
                                 setLoading(false);
                             });
                         return () => unsubscribe();
@@ -290,6 +282,12 @@
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                    {autoList.filter(a => filter === 'Tutti' || a.categoria === filter).length === 0 && !loading && (
+                                        <div className="col-span-full text-center py-20 bg-slate-50 rounded-[2rem] border border-slate-100">
+                                            <i data-lucide="car-front" className="w-12 h-12 mx-auto text-slate-300 mb-4"></i>
+                                            <p className="text-slate-500 font-bold uppercase tracking-widest text-sm">Nessun veicolo disponibile al momento.</p>
+                                        </div>
+                                    )}
                                     {autoList.filter(a => filter === 'Tutti' || a.categoria === filter).map(car => (
                                         <div key={car.id} onClick={() => openCarDetails(car)} className="bg-white rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition duration-500 border border-slate-100 group cursor-pointer">
                                             <div className="h-64 overflow-hidden relative">
